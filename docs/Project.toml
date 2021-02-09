@@ -1,0 +1,7 @@
+[deps]
+DeviationsLH = "298b45c6-23f3-4de3-ba2c-df38223c59b0"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+FilesLH = "69233b93-b644-4f5d-9b2e-8880c8b19068"
+
+[compat]
+Documenter = "~0.24"
