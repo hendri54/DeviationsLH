@@ -63,6 +63,29 @@ end
 
 
 """
+	$(SIGNATURES)
+
+Get model values from a `DevVector`.
+"""
+function get_model_values(devV :: DevVector, mName :: Symbol)
+    d = retrieve(devV, mName);
+    return get_model_values(d)
+end
+
+
+"""
+	$(SIGNATURES)
+
+Get data values from a `DevVector`.
+"""
+function get_data_values(devV :: DevVector, mName :: Symbol)
+    d = retrieve(devV, mName);
+    return get_data_values(d)
+end
+
+
+
+"""
 	set_weights!
 """
 function set_weights!(d :: DevVector, name :: Symbol, wtV)

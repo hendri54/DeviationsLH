@@ -106,12 +106,14 @@ end
 """
 	RegressionDeviation
 
-Holds model and data in the form of `RegressionTable` objects
+Holds model and data in the form of `RegressionTable` objects.
+Some regressors may be excluded from the computation of the scalar deviation.
 """
 Base.@kwdef mutable struct RegressionDeviation{F1} <: AbstractDeviation{F1}
     name  :: Symbol   
     modelV  :: RegressionTable = RegressionTable()
     dataV  :: RegressionTable = RegressionTable()
+    excludeV :: Vector{Symbol} = Vector{Symbol}()
     scalarWt :: F1 = one(F1)
     normP :: F1 = one(F1)
     shortStr  :: String = String(name)      # eg 'enter/iq'

@@ -24,8 +24,8 @@ function dev_vector_test()
         dev22 = dlh.retrieve(d, :d2);
         @test !isempty(dev22)
         @test dev22.dataV ≈ dev2.dataV
-        @test dlh.dev_exists(d, :d2)
-        @test !dlh.dev_exists(d, :notThere)
+        @test dev_exists(d, :d2)
+        @test !dev_exists(d, :notThere)
 
         @test isempty(retrieve(d, :notThere))
         dev = retrieve(d, :d1);
@@ -33,9 +33,11 @@ function dev_vector_test()
 
         # Set model values
         modelV = dev22.dataV .+ 1.3;
-        dlh.set_model_values(d, :d2, modelV);
+        set_model_values(d, :d2, modelV);
         dev22 = dlh.retrieve(d, :d2);
         @test dev22.modelV ≈ modelV
+        @test isapprox(get_model_values(d, :d2), modelV)
+        @test isapprox(get_data_values(d, :d2), get_data_values(dev22))
 
         # Set weights
         dev3 = make_deviation(3);

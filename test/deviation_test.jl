@@ -136,7 +136,7 @@ function regression_dev_test()
     d1 = dlh.empty_regression_deviation();
     @test isempty(d1);
 
-    d = make_regression_deviation(1);
+    d = make_regression_deviation(4);
     dNameV, dCoeffV, dSeV = get_unpacked_data_values(d);
     @test length(dCoeffV) == length(dSeV) > 1
     @test all(dSeV .> 0.0)
@@ -155,6 +155,14 @@ function regression_dev_test()
     mName2V, mCoeff2V, mSe2V = get_unpacked_model_values(d);
     @test mCoeff2V ≈ mCoeffV .+ 1.0
 
+    exclude_regressors!(d, [:beta2, :beta4]);
+    @test is_excluded(d, :beta2)
+    @test !is_excluded(d, :beta1)
+    name2V, mCoeff2V, mSe2V = get_unpacked_model_values(d; dropExcluded = true);
+    @test length(name2V) == length(mSe2V) == length(nameV) - 2
+    name3V, _ = get_unpacked_data_values(d; dropExcluded = true);
+    @test isequal(name2V, name3V)
+
     scalarDev, scalarStr = scalar_dev(d);
     @test scalarDev > 0.0
     @test isa(scalarStr, String)
@@ -165,8 +173,6 @@ function regression_dev_test()
     scalarDev, _ = scalar_dev(d);
     @test scalarDev ≈ 0.0
 end
-
-
 
 
 @testset "Deviations" begin

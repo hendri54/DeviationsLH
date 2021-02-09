@@ -66,6 +66,8 @@ function make_scalar_deviation(devNo :: Integer)
         longStr = longStr)
 end
 
+# Make regression deviation for testing.
+# No of regressors = devNo + 1
 function make_regression_deviation(devNo :: Integer)
     name, shortStr, longStr, fmtStr = dev_info(devNo);
     nc = devNo + 2;

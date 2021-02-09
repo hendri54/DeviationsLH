@@ -7,8 +7,10 @@ export AbstractDeviation, ScalarDeviation, Deviation, RegressionDeviation, Bound
 export get_data_values, get_unpacked_data_values, get_model_values, get_unpacked_model_values, get_weights, get_std_errors
 export set_model_values, set_weights!
 export scalar_dev, scalar_devs, scalar_dev_dict, short_display, show_deviation, validate_deviation, long_description, short_description
+# Regression deviation
+export exclude_regressors!, is_excluded
 # Deviation vectors
-export DevVector, retrieve, scalar_deviation, scalar_devs, show_deviations
+export DevVector, dev_exists, retrieve, scalar_deviation, scalar_devs, show_deviations
 
 # ChangeTable
 export ChangeTable, set_param_values!, show_table
