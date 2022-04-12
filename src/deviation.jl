@@ -101,10 +101,12 @@ function scalar_deviation(modelV :: AbstractArray{F1}, dataV :: AbstractArray{F1
     wtV; p :: F1 = one(F1)) where F1 <: AbstractFloat
 
     totalWt = sum(wtV);
-    @assert totalWt > 1e-8  "Total weight too small: $totalWt"
+    @argcheck totalWt > 1e-8  "Total weight too small: $totalWt";
+    @argcheck !any(isnan.(modelV))  "Model: $modelV";
     # Scaling `wtV` so it sums to 1 partially undoes the `^(1/p)` scaling below.
     devV = (wtV ./ totalWt) .* (abs.(modelV .- dataV)) .^ p;
     scalarDev = totalWt * sum(devV);
+    @argcheck (scalarDev >= 0.0)  "Scalar dev not positive: $scalarDev";
     return scalarDev
 end
 

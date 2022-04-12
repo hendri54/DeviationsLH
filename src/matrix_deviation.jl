@@ -68,7 +68,8 @@ Uses a weighted norm. The exponent is determined by the Deviation's `normP` prop
 """
 function scalar_dev(d :: Deviation{F1}; inclScalarWt :: Bool = true) where F1
     modelV = get_model_values(d; matchData = true);
-    @assert size(modelV) == size(get_data_values(d))
+    @assert size(modelV) == size(get_data_values(d));
+    @argcheck !any(isnan.(modelV))  "$d  --  Model: $modelV";
 
     scalarDev = scalar_deviation(modelV, get_data_values(d), d.wtV; 
         p = norm_p(d));

@@ -123,7 +123,7 @@ function regression_show_fct(d :: RegressionDeviation;
     end
 
     io = open_show_path(d, fPath = fPath);
-    pretty_table(io, dataM,  headerV);
+    pretty_table(io, dataM;  header = headerV);
     close_show_path(d, io);
 end
 

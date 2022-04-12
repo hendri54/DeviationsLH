@@ -197,6 +197,7 @@ function scalar_deviation(d :: DevVector)
         @assert sDev >= 0.0
         scalarDev += sDev;
     end
+    @argcheck (scalarDev >= 0.0)  "Scalar dev not positive: $scalarDev";
     return scalarDev
 end
 

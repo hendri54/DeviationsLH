@@ -125,7 +125,7 @@ Show a `ChangeTable` as a `PrettyTable`.
 """
 function show_table(ct :: ChangeTable, io = stdout)
     hdRow, hdColumn, valueM = make_table(ct);
-    pretty_table(io, [hdColumn  valueM],  hdRow);
+    pretty_table(io, [hdColumn  valueM]; header = hdRow);
 end    
 
 
@@ -192,7 +192,7 @@ Show a table with the largest deviation changes for each parameter.
 function show_largest_change_table(ct :: ChangeTable, n :: Integer; io = stdout,
     transposed :: Bool = false)
     hdRow, hdColumn, valueM = make_largest_change_table(ct, n; transposed = transposed);
-    pretty_table(io, [hdColumn  valueM],  hdRow);
+    pretty_table(io, [hdColumn  valueM]; header = hdRow);
 end    
 
 
