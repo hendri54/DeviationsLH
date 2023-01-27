@@ -25,6 +25,22 @@ BoundsDeviation
 scalar_dev
 ```
 
+## Scaling Deviations
+
+A common approach is to use the sum of squared deviations between model and data, perhaps weighted by inverse standard errors. This does not work well for data moments that are either small (e.g. percentiles) or span a wide range (e.g. percentiles).
+
+Example: `d = 0.1; m = 0.2; dev = 0.01` versus `d = 0.0, m = 1.0; dev = 100`.
+
+One option: map data into range `[1, 2]`. `dHat = f(d) in [1, 2]`. `mHat = f(m)`. 
+Deviation `d = abs(dHat - mHat) ^ p`.
+
+Another option: `abs(d - m) ^ p`.
+
+In general: Scaling is defined by `f` and `p`.
+
+- absolute deviation: `f(d) = d` and `p = 1`
+- squared deviation: `f(d) = d` and `p = 2`
+
 ## [`ChangeTable`](@ref)
 
 This is an object that can keep track of which model parameters affect which deviations.
@@ -35,5 +51,10 @@ The user initializes the table with the constructor. Then they solve the model p
 ```@docs
 ChangeTable
 ```
+
+# Change Log
+
+2023-Jan-27 (v2.0)
+Added `AbstractScaling`. Removed `normP`.
 
 -------------

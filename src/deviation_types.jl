@@ -66,8 +66,11 @@ Base.@kwdef mutable struct Deviation{F1 <: AbstractFloat} <:
     idxV :: Vector{Any} = []
     # Scales the scalar deviation.
     scalarWt :: F1 = one(F1)
+    scaling :: AbstractScaling{F1} = make_scaling_none()
     # Using weighted normp. By default: sum of abs deviations.
-    normP :: F1 = one(F1)
+    # normP :: F1 = one(F1)
+    # See `scalar_deviation` for the role of `offset`
+    # offset :: F1 = zero(F1)
     shortStr  :: String = String(name)      # eg 'enter/iq'
     # eg 'fraction entering college by iq quartile'
     longStr  :: String = shortStr
@@ -83,7 +86,8 @@ end
     ScalarDeviation
     
 Here the `wtV` field is intended to hold 1 / std error of the moment.
-The scalar deviation is always the absolute deviation. For scalars, the exponent in the norm makes no difference.
+
+weights not clear +++++
 """
 Base.@kwdef mutable struct ScalarDeviation{F1 <: AbstractFloat} <: AbstractDeviation{F1}
     name  :: Symbol     # eg 'fracEnterIq'
@@ -93,8 +97,9 @@ Base.@kwdef mutable struct ScalarDeviation{F1 <: AbstractFloat} <: AbstractDevia
     # Used when a std error of the data moment is known
     wtV :: F1 = one(F1)
     scalarWt :: F1 = one(F1)
+    scaling :: AbstractScaling{F1} = make_scaling_none()
     # Using weighted normp. By default: sum of abs deviations.
-    normP :: F1 = one(F1)
+    # normP :: F1 = one(F1)
     shortStr  :: String = String(name)      # eg 'enter/iq'
     longStr  :: String = shortStr
     fmtStr  :: String = "%.2f"
@@ -115,7 +120,8 @@ Base.@kwdef mutable struct RegressionDeviation{F1} <: AbstractDeviation{F1}
     dataV  :: RegressionTable = RegressionTable()
     excludeV :: Vector{Symbol} = Vector{Symbol}()
     scalarWt :: F1 = one(F1)
-    normP :: F1 = one(F1)
+    scaling :: AbstractScaling{F1} = make_scaling_none()
+    # normP :: F1 = one(F1)
     shortStr  :: String = String(name)      # eg 'enter/iq'
     longStr  :: String = shortStr
     fmtStr  :: String = "%.2f"

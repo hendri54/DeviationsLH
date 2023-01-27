@@ -5,6 +5,10 @@ short_description(d :: AbstractDeviation) = d.shortStr;
 long_description(d :: AbstractDeviation) = d.longStr;
 norm_p(d :: AbstractDeviation) = d.normP;
 
+is_scalar_deviation(::AbstractDeviation) = false;
+is_scalar_deviation(::ScalarDeviation{F1}) where F1 = true;
+
+
 """
     $(SIGNATURES)
 
@@ -89,30 +93,49 @@ validate_deviation(d :: AbstractDeviation) = true
 
 ## -------------  Computing the scalar deviation
 
-"""
-	$(SIGNATURES)
+# """
+# 	$(SIGNATURES)
 
-Compute the scalar deviation between model and data values. 
-Using a weighted sum of deviations to a power. By default: simply mean abs deviation.
+# Compute the scalar deviation between model and data values. 
+# Deviation = weighted sum of  (offset + abs(model - data)) ^ p - offset
+# By default: `p=1` and `offset=0` => mean absolute deviation
 
-Note: Using a weighted norm would not increase the overall deviation for a moment that fits poorly.
-"""
-function scalar_deviation(modelV :: AbstractArray{F1}, dataV :: AbstractArray{F1}, 
-    wtV; p :: F1 = one(F1)) where F1 <: AbstractFloat
+# Note: Using a weighted norm would not increase the overall deviation for a moment that fits poorly.
 
-    totalWt = sum(wtV);
-    @argcheck totalWt > 1e-8  "Total weight too small: $totalWt";
-    @argcheck !any(isnan.(modelV))  "Model: $modelV";
-    # Scaling `wtV` so it sums to 1 partially undoes the `^(1/p)` scaling below.
-    devV = (wtV ./ totalWt) .* (abs.(modelV .- dataV)) .^ p;
-    scalarDev = totalWt * sum(devV);
-    @argcheck (scalarDev >= 0.0)  "Scalar dev not positive: $scalarDev";
-    return scalarDev
-end
+# # Arguments
+# - `offset`: Useful for model / data values that are percentages. Then `offset = 1` and `p = 2` produces reasonable scaling that does not downweight small percentiles too much. Irrelevant when `p = 1`.
+# """
+# function scalar_deviation(modelV :: AbstractArray{F1}, dataV :: AbstractArray{F1}, 
+#     wtV; p :: F1 = one(F1), offset :: F1 = zero(F1)) where F1 <: AbstractFloat
 
-scalar_deviation(model :: F1, data :: F1, wt :: F1;
-    p :: F1 = one(F1)) where F1 <: AbstractFloat =
-    wt * (abs(model - data) ^ p);
+#     if wtV isa Number
+#         scalarWeight = true;
+#         totalWt = one(F1);
+#         wt = one(F1) / length(modelV);
+#     else
+#         scalarWeight = false;
+#         totalWt = sum(wtV);
+#         wt = zero(F1);
+#     end
+#     @argcheck totalWt > 1e-8  "Total weight too small: $totalWt";
+#     @argcheck !any(isnan.(modelV))  "Model: $modelV";
+#     # Scaling `wtV` so it sums to 1 partially undoes the `^(1/p)` scaling below.
+#     # devV = (wtV ./ totalWt) .* (abs.(modelV .- dataV)) .^ p;
+#     # scalarDev = totalWt * sum(devV);
+
+#     scalarDev = zero(F1);
+#     for j in eachindex(modelV)
+#         scalarWeight  ||  (wt = wtV[j] / totalWt);
+#         scalarDev += wt * ((offset + abs(modelV[j] - dataV[j])) ^ p - offset);
+#     end
+
+#     @argcheck (scalarDev >= 0.0)  "Scalar dev not positive: $scalarDev";
+#     return scalarDev
+# end
+
+# scalar_deviation(model :: F1, data :: F1, wt :: F1;
+#     p :: F1 = one(F1)) where F1 <: AbstractFloat =
+#     wt * (abs(model - data) ^ p);
 
 
 ## ---------------  Display

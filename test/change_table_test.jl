@@ -5,7 +5,7 @@ dlh = DeviationsLH;
 function change_table_test()
     @testset "Change table basics" begin
         n = 3;
-        dv = make_deviation_vector(n);
+        dv = make_test_deviation_vector(n);
 
         paramNameV = [:aa, :bbb, :cc, :d];
         nParam = length(paramNameV);
@@ -17,7 +17,7 @@ function change_table_test()
 
         for j = 1 : nParam
             # Offset ensures that the first deviation is the same as the base
-            dv2 = make_deviation_vector(n; offset = 0.5 * (j-1));
+            dv2 = make_test_deviation_vector(n; offset = 0.5 * (j-1));
             dlh.set_param_values!(ct, j, dv2; scalarDev = nothing);
         end
 

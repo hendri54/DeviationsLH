@@ -95,7 +95,7 @@ function scalar_dev(d :: RegressionDeviation; se2coeffLb :: Float64 = 0.1,
     @assert isequal(nameV, mNameV)  "Names do not match: \n $nameV \n $mNameV"
 
     seV = max.(seV, se2coeffLb .* abs.(coeffV));
-    scalarDev = scalar_deviation(mCoeffV, coeffV, 1.0 ./ seV; p = norm_p(d));
+    scalarDev = scalar_deviation(d.scaling, mCoeffV, coeffV, 1.0 ./ seV);
     if inclScalarWt
         scalarDev *= d.scalarWt;
     end

@@ -7,13 +7,13 @@ function dev_vector_test()
     @testset "DevVector" begin
         d = DevVector()
         @test length(d) == 0
-        dev1 = make_deviation(1);
+        dev1 = make_test_deviation(1);
         dlh.append!(d, dev1);
         @test length(d) == 1
 
 
         # Scalar deviation
-        dev2 = make_scalar_deviation(2);
+        dev2 = dlh.make_test_scalar_deviation(2);
         dlh.append!(d, dev2);
         @test length(d) == 2
         show_deviations(d; sorted = false);
@@ -40,7 +40,7 @@ function dev_vector_test()
         @test isapprox(get_data_values(d, :d2), get_data_values(dev22))
 
         # Set weights
-        dev3 = make_deviation(3);
+        dev3 = make_test_deviation(3);
         dlh.append!(d, dev3);
         wtV = dev3.dataV .+ 2.3;
         dlh.set_weights!(d, :d3, wtV);
@@ -52,7 +52,7 @@ end
 
 function iterate_test()
     @testset "Iteration" begin
-        d = make_deviation_vector(5);
+        d = make_test_deviation_vector(5);
         j = 0;
         for dev in d
             @test isa(dev, AbstractDeviation)
@@ -66,7 +66,7 @@ end
 function scalar_dev_devvector_test()
     @testset "Scalar deviation" begin
         n = 5;
-        d = make_deviation_vector(n);
+        d = make_test_deviation_vector(n);
         devV = scalar_devs(d);
         @test length(devV) == n;
         # Not sorted, so test is weak
@@ -85,7 +85,7 @@ end
 function devvec_dict_test()
     @testset "Deviation Dict" begin
         n = 5;
-        d = make_deviation_vector(5);
+        d = make_test_deviation_vector(5);
         sds = scalar_dev_dict(d);
         @test isa(sds, Dict{Symbol, dlh.DevType})
         @test length(sds) == 5
@@ -102,11 +102,25 @@ function devvec_dict_test()
     end
 end
 
+function scalar_dev_table_test()
+    @testset "Scalar deviation table" begin
+        devV = DevVector();
+        for j = 1 : 4
+            d = dlh.make_test_scalar_deviation(j);
+            append!(devV, d);
+        end
+
+        tbM, headerV = scalar_deviation_table(devV);
+        @test size(tbM, 2) == length(headerV);
+    end
+end
+
 @testset "DevVector" begin
-    dev_vector_test()
-    iterate_test()
-    scalar_dev_devvector_test()
-    devvec_dict_test()
+    dev_vector_test();
+    iterate_test();
+    scalar_dev_devvector_test();
+    devvec_dict_test();
+    scalar_dev_table_test();
 end
 
 # ----------------
