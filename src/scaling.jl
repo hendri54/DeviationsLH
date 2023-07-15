@@ -59,4 +59,13 @@ scale(s :: ScalingLinear, m, d) = ((s.f0 .+ s.slope .* abs.(d .- m)) .^ s.p)  .-
 make_scaling_relative(scl, p) = ScalingRelative(scl, p);
 scale(s :: ScalingRelative, m, d) = abs.((d .- m) ./ s.scale) .^ s.p;
 
+## ----------  Log
+
+make_scaling_log(f0) = ScalingLog(f0);
+function scale(s :: ScalingLog, m, d)
+    @assert all_at_least(m, -s.f0 + 1e-8)  "Model values too low: $m";
+    @assert all_at_least(d, -s.f0 + 1e-8)  "Data values too low: $d";
+    abs.(log.(s.f0 .+ m) .- log.(s.f0 .+ d));
+end
+
 # --------------

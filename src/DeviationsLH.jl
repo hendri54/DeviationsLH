@@ -1,12 +1,12 @@
 module DeviationsLH
 
 using ArgCheck, DocStringExtensions, Formatting, PrettyTables
-using EconometricsLH, ModelObjectsLH
+using CommonLH, EconometricsLH, ModelObjectsLH
 
 # Types
 export AbstractDeviation, ScalarDeviation, Deviation, RegressionDeviation, BoundsDeviation, PenaltyDeviation;
-export AbstractScaling, ScalingNone, ScalingLinear;
-export make_scaling_none, make_scaling_linear, make_scaling_relative;
+export AbstractScaling, ScalingNone, ScalingRelative, ScalingLinear, ScalingLog;
+export make_scaling_none, make_scaling_linear, make_scaling_relative, make_scaling_log;
 # Type methods
 export get_data_values, get_unpacked_data_values, get_model_values, get_unpacked_model_values, get_weights, get_std_errors;
 export set_model_values, set_weights!;

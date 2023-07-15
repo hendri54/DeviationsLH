@@ -148,7 +148,8 @@ function show_deviations(io :: IO,  d :: DevVector; sorted :: Bool = false)
         if sorted
             lineV = sort(lineV);
         end
-        show_string_vector(lineV, 80, io = io);
+        stringWidth = min(20, maximum(length.(lineV)));
+        show_string_vector(lineV, 80; io, stringWidth);
     end
 end
 

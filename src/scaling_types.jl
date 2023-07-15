@@ -35,4 +35,17 @@ struct ScalingRelative{F1} <: AbstractScaling{F1}
 end
 
 
+"""
+	$(SIGNATURES)
+
+Log scaling: `f(m,d) = abs(log(f0 + m)) - log(f0 + d))`.
+Assumes that model and data values are non-negative.
+Produces intuitively appealing deviations when `f0 = 0.5`.
+"""
+struct ScalingLog{F1} <: AbstractScaling{F1}
+    f0 :: F1
+end
+
+
+
 # ---------------------

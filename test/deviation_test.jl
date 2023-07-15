@@ -177,7 +177,8 @@ end
     for scaling in [
         make_scaling_none(), 
         make_scaling_linear(1.0, 0.8, 1.5),
-        make_scaling_relative(0.8, 1.6)
+        make_scaling_relative(0.8, 1.6),
+        make_scaling_log(0.5)
         ]
         for d in [
             make_test_deviation(1; scaling), 
