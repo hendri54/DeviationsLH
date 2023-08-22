@@ -58,7 +58,7 @@ Base.@kwdef mutable struct Deviation{F1 <: AbstractFloat} <:
     name  :: Symbol     # eg 'fracEnterIq'
     modelV  :: Array{F1} = zeros(F1, 1)  # model values
     dataV  :: Array{F1} = zeros(F1, 1)   # data values
-    stdV :: Array{F1} = zeros(F1, 1)
+    stdV :: Array{F1} = zeros(F1, 1)  # data std errors
     # relative weights, sum to user choice
     wtV  :: Array{F1} = ones(F1, size(dataV))
     # Indices such that `modelV[idxV...]` matches `dataV`
@@ -79,6 +79,7 @@ Base.@kwdef mutable struct Deviation{F1 <: AbstractFloat} <:
     fmtStr  :: String = "%.2f"
     showFct = deviation_show_fct
     showPath :: String = ""
+    auxData :: Any = nothing
 end
 
 
@@ -105,6 +106,7 @@ Base.@kwdef mutable struct ScalarDeviation{F1 <: AbstractFloat} <: AbstractDevia
     fmtStr  :: String = "%.2f"
     showFct = scalar_show_fct
     showPath :: String = ""
+    auxData :: Any = nothing
 end
 
 
@@ -127,6 +129,7 @@ Base.@kwdef mutable struct RegressionDeviation{F1} <: AbstractDeviation{F1}
     fmtStr  :: String = "%.2f"
     showFct = regression_show_fct
     showPath :: String = ""
+    auxData :: Any = nothing
 end
 
 
@@ -152,6 +155,7 @@ Base.@kwdef mutable struct BoundsDeviation{F1 <: AbstractFloat} <: AbstractDevia
     fmtStr  :: String = "%.2f"
     showFct = bounds_show_fct
     showPath :: String = ""
+    auxData
 end
 
 
@@ -169,6 +173,7 @@ Base.@kwdef mutable struct PenaltyDeviation{F1 <: AbstractFloat} <: AbstractDevi
     longStr  :: String = shortStr
     showFct = penalty_show_fct
     showPath :: String = ""
+    auxData :: Any = nothing
 end
 
 

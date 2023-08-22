@@ -13,7 +13,8 @@ function make_test_matrix_deviation(devNo :: Integer;
     wtV = dataV .+ 0.9;
     name, shortStr, longStr, fmtStr = mdl.test_dev_info(devNo);
     d = Deviation{Float64}(; name, modelV, dataV, wtV,
-        idxV, scaling,  shortStr = shortStr, longStr = longStr);
+        idxV, scaling,  shortStr, longStr,
+        auxData = mdl.make_test_aux_data());
     return d;
 end
 
@@ -25,7 +26,8 @@ function make_test_deviation(devNo :: Integer;
     wtV = dataV .+ 0.9;
     name, shortStr, longStr, fmtStr = mdl.test_dev_info(devNo);
     d = Deviation{Float64}(; name, modelV, dataV, wtV,
-        scaling, shortStr, longStr);
+        scaling, shortStr, longStr,
+        auxData = mdl.make_test_aux_data());
     return d;
 end
 
@@ -39,17 +41,20 @@ function make_test_bounds_deviation(devNo :: Integer, insideBounds :: Bool)
     end
 
     name, shortStr, longStr, fmtStr = mdl.test_dev_info(devNo);
-    d = BoundsDeviation{Float64}(name = name,  modelV = modelM,  lbV = lbM,  ubV = ubM,
-        wtV = wtM,  shortStr = shortStr, longStr = longStr, fmtStr = fmtStr);
+    d = BoundsDeviation{Float64}(;
+        name,  modelV = modelM,  lbV = lbM,  ubV = ubM,
+        wtV = wtM,  shortStr, longStr, fmtStr, 
+        auxData = mdl.make_test_aux_data());
     return d;
 end
 
 function make_test_penalty_deviation(devNo :: Integer)
     modelM = collect(1 : 5) .+ collect(2 : 4)' .+ 0.5;
     name, shortStr, longStr, fmtStr = mdl.test_dev_info(devNo);
-    d = PenaltyDeviation{Float64}(name = name,  modelV = modelM,  
+    d = PenaltyDeviation{Float64}(; name = name,  modelV = modelM,  
         scalarDevFct = penalty_dev_fct,
-        shortStr = shortStr, longStr = longStr);
+        shortStr, longStr,
+        auxData = mdl.make_test_aux_data());
     return d;
 
 end
@@ -71,7 +76,8 @@ function make_test_regression_deviation(devNo :: Integer)
     rData = RegressionTable(coeffNameV, mCoeffV .+ 0.1, mSeV .+ 0.2);
     scaling = make_scaling_none();
     return RegressionDeviation{Float64}(; name,
-        shortStr, longStr, modelV = rModel, dataV = rData, scaling)
+        shortStr, longStr, modelV = rModel, dataV = rData, scaling,
+        auxData = mdl.make_test_aux_data())
 end
 
 

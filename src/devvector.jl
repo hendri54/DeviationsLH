@@ -176,7 +176,7 @@ function scalar_deviation_table(devV :: DevVector)
                 seStr = "";
             end
             _, sDevStr = scalar_dev(dev);
-            row = [string(dev.name)  "$(data)$(seStr)"  string(model)  sDevStr];
+            row = [string(long_description(dev))  "$(data)$(seStr)"  string(model)  sDevStr];
             tbM = vcat(tbM, row);
         end
     end
@@ -264,9 +264,10 @@ function make_test_scalar_deviation(devNo :: Integer)
     name, shortStr, longStr, fmtStr = test_dev_info(devNo);
     modelV = devNo * 1.1;
     dataV = devNo * 2.2;
-    return ScalarDeviation{Float64}(name = name, modelV = modelV, 
-        dataV = dataV, shortStr = shortStr, 
-        longStr = longStr)
+    return ScalarDeviation{Float64}(;
+        name = name, modelV = modelV, 
+        dataV, shortStr, longStr,
+        auxData = make_test_aux_data())
 end
 
 function test_dev_info(devNo :: Integer)

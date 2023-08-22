@@ -54,6 +54,10 @@ ChangeTable
 
 # Change Log
 
+2023-Aug-22
+Aux data in all deviations.
+2023-July-17
+Using long description in scalar_deviation_table
 2023-Jan-30
 Added `ScalingLog`.
 2023-Jan-27 (v2.0)

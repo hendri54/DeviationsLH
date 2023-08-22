@@ -8,6 +8,20 @@ norm_p(d :: AbstractDeviation) = d.normP;
 is_scalar_deviation(::AbstractDeviation) = false;
 is_scalar_deviation(::ScalarDeviation{F1}) where F1 = true;
 
+"""
+	$(SIGNATURES)
+
+Additional data to be passed to function that computes model moments, such as parameters.
+Nothing by default.
+"""
+function get_aux_data(d :: AbstractDeviation{F1}) where F1
+    return d.auxData;
+end
+
+function make_test_aux_data()
+    return (x = [1,2,3], yStr = "abc");
+end
+
 
 """
     $(SIGNATURES)

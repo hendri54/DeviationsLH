@@ -3,12 +3,10 @@ using EconometricsLH, DeviationsLH, Test;
 mdl = DeviationsLH;
 
 function deviation_test(d)
-    @testset "Deviation" begin
-        # d1 = mdl.empty_deviation(Float64);
-        # @test isempty(d1);
-        
+    @testset "$d" begin
         @test !is_scalar_deviation(d);
         @test !isempty(d)
+        @test !isnothing(get_aux_data(d));
 
         sDev, devStr = scalar_dev(d);
         @test isa(sDev, Float64);
@@ -47,6 +45,7 @@ function bounds_test()
         for insideBounds = [true, false]
             d = make_test_bounds_deviation(1, insideBounds);
             @test !isempty(d)
+            @test !isnothing(get_aux_data(d));
 
             scalarDev, devStr = scalar_dev(d);
             @test isa(scalarDev, Float64);
@@ -79,6 +78,7 @@ function penalty_test()
     @testset "Penalty Deviation" begin
         d = make_test_penalty_deviation(1);
         @test !isempty(d)
+        @test !isnothing(get_aux_data(d));
 
         scalarDev, devStr = scalar_dev(d);
         @test isa(scalarDev, Float64);
@@ -110,6 +110,7 @@ function scalar_dev_test()
         d = mdl.make_test_scalar_deviation(1);
         @test is_scalar_deviation(d);
         @test !isempty(d);
+        @test !isnothing(get_aux_data(d));
         sDev, devStr = scalar_dev(d);
         @test isa(sDev, Float64);
         @test isa(devStr, AbstractString)
@@ -136,6 +137,7 @@ function regression_dev_test()
     dNameV, dCoeffV, dSeV = get_unpacked_data_values(d);
     @test length(dCoeffV) == length(dSeV) > 1
     @test all(dSeV .> 0.0)
+    @test !isnothing(get_aux_data(d));
 
     show_deviation(d);
     show_deviation(d, showModel = false);

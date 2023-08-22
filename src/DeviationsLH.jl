@@ -8,7 +8,7 @@ export AbstractDeviation, ScalarDeviation, Deviation, RegressionDeviation, Bound
 export AbstractScaling, ScalingNone, ScalingRelative, ScalingLinear, ScalingLog;
 export make_scaling_none, make_scaling_linear, make_scaling_relative, make_scaling_log;
 # Type methods
-export get_data_values, get_unpacked_data_values, get_model_values, get_unpacked_model_values, get_weights, get_std_errors;
+export get_data_values, get_unpacked_data_values, get_model_values, get_unpacked_model_values, get_weights, get_std_errors, get_aux_data;
 export set_model_values, set_weights!;
 export validate_deviation;
 # Scalar deviations
