@@ -54,6 +54,10 @@ ChangeTable
 
 # Change Log
 
+2024-Feb-1
+Added `is_bounds_deviation`.
+2023-Aug-24
+Option to skip small deviations in deviation display.
 2023-Aug-22
 Aux data in all deviations.
 2023-July-17

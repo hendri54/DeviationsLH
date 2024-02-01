@@ -1,7 +1,7 @@
 name = "DeviationsLH"
 uuid = "298b45c6-23f3-4de3-ba2c-df38223c59b0"
 authors = ["hendri54 <hendricksl@protonmail.com>"]
-version = "2.2"
+version = "2.3"
 
 [deps]
 ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"

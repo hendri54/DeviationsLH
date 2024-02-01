@@ -135,15 +135,19 @@ Base.show(io :: IO, d :: DevVector) = show_deviations(io, d);
 
 Show all deviations. Each gets a short display with name and scalar deviation.
 Used during calibration.
+If `scalar_dev(dev) < minDev` then the deviation is not shown.
 """
-function show_deviations(io :: IO,  d :: DevVector; sorted :: Bool = false)
+function show_deviations(io :: IO,  d :: DevVector; 
+        sorted :: Bool = false, minDev = -1.0)
     if length(d) < 1
         println(io, "No deviations");
     else
         lineV = Vector{String}();
-        for i1 in 1 : length(d)
-            dStr = short_display(d.dv[i1]);
-            push!(lineV, dStr);
+        for dev in d.dv
+            if first(scalar_dev(dev)) > minDev
+                dStr = short_display(dev);
+                push!(lineV, dStr);
+            end
         end
         if sorted
             lineV = sort(lineV);

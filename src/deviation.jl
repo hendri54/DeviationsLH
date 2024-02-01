@@ -8,6 +8,10 @@ norm_p(d :: AbstractDeviation) = d.normP;
 is_scalar_deviation(::AbstractDeviation) = false;
 is_scalar_deviation(::ScalarDeviation{F1}) where F1 = true;
 
+is_bounds_deviation(::AbstractDeviation) = false;
+is_bounds_deviation(::BoundsDeviation) = true;
+
+
 """
 	$(SIGNATURES)
 
