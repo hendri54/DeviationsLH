@@ -54,6 +54,8 @@ ChangeTable
 
 # Change Log
 
+2024-July-9 (v1.4)
+Replaced Formatting.jl
 2024-Feb-1
 Added `is_bounds_deviation`.
 2023-Aug-24

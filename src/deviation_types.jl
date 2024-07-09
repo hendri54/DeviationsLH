@@ -74,7 +74,7 @@ Base.@kwdef mutable struct Deviation{F1 <: AbstractFloat} <:
     shortStr  :: String = String(name)      # eg 'enter/iq'
     # eg 'fraction entering college by iq quartile'
     longStr  :: String = shortStr
-    # For displaying the deviation. Compatible with `Formatting.sprintf1`
+    # For displaying the deviation. Compatible with `Formatting.cfmt`
     # E.g. "%.2f"
     fmtStr  :: String = "%.2f"
     showFct = deviation_show_fct
@@ -150,7 +150,7 @@ Base.@kwdef mutable struct BoundsDeviation{F1 <: AbstractFloat} <: AbstractDevia
     shortStr  :: String = String(name)  
     # eg 'fraction entering college by iq quartile'
     longStr  :: String = shortStr
-    # For displaying the deviation. Compatible with `Formatting.sprintf1`
+    # For displaying the deviation. Compatible with `Formatting.cfmt`
     # E.g. "%.2f"
     fmtStr  :: String = "%.2f"
     showFct = bounds_show_fct

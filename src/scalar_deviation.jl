@@ -12,7 +12,7 @@ function scalar_dev(d :: ScalarDeviation; inclScalarWt :: Bool = true)
     if inclScalarWt
         scalarDev *= d.scalarWt;
     end
-    scalarStr = sprintf1(d.fmtStr, scalarDev);
+    scalarStr = cfmt(d.fmtStr, scalarDev);
     return scalarDev, scalarStr
 end
 
@@ -40,13 +40,13 @@ end
 
 function scalar_show_string(d :: ScalarDeviation{F1}; showModel :: Bool = true) where F1
     if showModel
-        mStr = " model: " * sprintf1(d.fmtStr, d.modelV);
+        mStr = " model: " * cfmt(d.fmtStr, d.modelV);
     else
         mStr = "";
     end
-    dStr = sprintf1(d.fmtStr, d.dataV);
+    dStr = cfmt(d.fmtStr, d.dataV);
     if data_se(d) > zero(F1)
-        seStr = "(" * sprintf1(d.fmtStr, d.stdV) * ")";
+        seStr = "(" * cfmt(d.fmtStr, d.stdV) * ")";
     else
         seStr = "";
     end

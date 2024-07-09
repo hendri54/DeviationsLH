@@ -99,7 +99,7 @@ function scalar_dev(d :: RegressionDeviation; se2coeffLb :: Float64 = 0.1,
     if inclScalarWt
         scalarDev *= d.scalarWt;
     end
-    scalarStr = sprintf1(d.fmtStr, scalarDev);
+    scalarStr = cfmt(d.fmtStr, scalarDev);
     return scalarDev, scalarStr
 end
 

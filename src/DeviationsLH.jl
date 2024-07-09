@@ -1,6 +1,6 @@
 module DeviationsLH
 
-using ArgCheck, DocStringExtensions, Formatting, PrettyTables
+using ArgCheck, DocStringExtensions, Format, PrettyTables
 using CommonLH, EconometricsLH, ModelObjectsLH
 
 # Types

@@ -77,7 +77,7 @@ function scalar_dev(d :: Deviation{F1}; inclScalarWt :: Bool = true) where F1
     if inclScalarWt
         scalarDev *= d.scalarWt;
     end
-    scalarStr = sprintf1(d.fmtStr, scalarDev);
+    scalarStr = cfmt(d.fmtStr, scalarDev);
     @assert scalarDev >= zero(F1)  "Negative deviation for $d: $scalarDev"
     return scalarDev, scalarStr
 end
@@ -118,11 +118,11 @@ function deviation_show_fct(d :: Deviation; showModel :: Bool = true, fPath :: S
         print(io, "\t $ir: ");
         for ic = 1 : nc
             if showModel
-                mStr = sprintf1(d.fmtStr, modelV[ir, ic]);
+                mStr = cfmt(d.fmtStr, modelV[ir, ic]);
             else
                 mStr = "  --  ";
             end
-            dStr = sprintf1(d.fmtStr, dataV[ir, ic]);
+            dStr = cfmt(d.fmtStr, dataV[ir, ic]);
             print(io, "\t $mStr / $dStr");
         end
         print(io, "\n");

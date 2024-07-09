@@ -16,7 +16,7 @@ function scalar_dev(d :: PenaltyDeviation{F1}; inclScalarWt :: Bool = true) wher
     if inclScalarWt
         scalarDev *= d.scalarWt;
     end
-    scalarStr = sprintf1("%.2f", scalarDev);
+    scalarStr = cfmt("%.2f", scalarDev);
 
     return scalarDev, scalarStr
 end

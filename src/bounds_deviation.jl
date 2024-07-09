@@ -26,7 +26,7 @@ function scalar_dev(d :: BoundsDeviation{F1}; inclScalarWt :: Bool = true) where
             scalarDev *= d.scalarWt;
         end
     end
-    scalarStr = sprintf1(d.fmtStr, scalarDev);
+    scalarStr = cfmt(d.fmtStr, scalarDev);
 
     return scalarDev, scalarStr
 end
@@ -61,12 +61,12 @@ function bounds_show_fct(d :: BoundsDeviation{F1}; showModel :: Bool = true, fPa
         print(io, "\t $ir: ");
         for ic = 1 : nc
             if showModel
-                mStr = sprintf1(d.fmtStr, modelV[ir, ic]);
+                mStr = cfmt(d.fmtStr, modelV[ir, ic]);
             else
                 mStr = "  --  ";
             end
-            lbStr = sprintf1(d.fmtStr, lbV[ir, ic]);
-            ubStr = sprintf1(d.fmtStr, ubV[ir, ic]);
+            lbStr = cfmt(d.fmtStr, lbV[ir, ic]);
+            ubStr = cfmt(d.fmtStr, ubV[ir, ic]);
             print(io, "\t $lbStr / $mStr / $ubStr");
         end
         print(io, "\n");
