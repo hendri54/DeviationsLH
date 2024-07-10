@@ -111,8 +111,11 @@ function scalar_dev_table_test()
         end
 
         for dropZeroWeights in (true, false)
-            tbM, headerV = scalar_deviation_table(devV; dropZeroWeights);
-            @test size(tbM, 2) == length(headerV);
+            for showScalarDevs in (true, false)
+                tbM, headerV = scalar_deviation_table(devV; 
+                    dropZeroWeights, showScalarDevs);
+                @test size(tbM, 2) == length(headerV);
+            end
         end
     end
 end

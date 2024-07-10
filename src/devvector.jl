@@ -167,8 +167,10 @@ Write a table containing scalar deviations. Can be printed nicely using `PrettyT
 
 # Arguments
 - `dropZeroWeights`: If true, drop deviations with zero weights (that are not "used" in calibration)
+- `showScalarDevs`: If true, show scalar deviations
 """
-function scalar_deviation_table(devV :: DevVector; dropZeroWeights = false)
+function scalar_deviation_table(devV :: DevVector; 
+        dropZeroWeights = false, showScalarDevs = true)
     headerV = ["Description", "Data", "Model", "Deviation"];
     tbM = Matrix{String}(undef, 0, 4);
     for dev in devV;
@@ -188,6 +190,10 @@ function scalar_deviation_table(devV :: DevVector; dropZeroWeights = false)
                 tbM = vcat(tbM, row);
             end
         end
+    end
+    if !showScalarDevs
+        tbM = tbM[:, 1:3];
+        headerV = headerV[1:3];
     end
     return tbM, headerV
 end
