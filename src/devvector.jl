@@ -164,24 +164,29 @@ show_deviations(d :: DevVector; kwargs...) = show_deviations(stdout, d; kwargs..
     $(SIGNATURES)
 
 Write a table containing scalar deviations. Can be printed nicely using `PrettyTables`.
+
+# Arguments
+- `dropZeroWeights`: If true, drop deviations with zero weights (that are not "used" in calibration)
 """
-function scalar_deviation_table(devV :: DevVector)
-    headerV = ["Name", "Data", "Model", "Deviation"];
+function scalar_deviation_table(devV :: DevVector; dropZeroWeights = false)
+    headerV = ["Description", "Data", "Model", "Deviation"];
     tbM = Matrix{String}(undef, 0, 4);
     for dev in devV;
         if is_scalar_deviation(dev)
-            data = round(only(get_data_values(dev)); digits = 2);
-            model = round(only(get_model_values(dev)); digits = 2);
-            stdError = get_std_errors(dev);
-            if !isnothing(stdError)
-                stdError = round(stdError, digits = 2);
-                seStr = " ($stdError)";
-            else
-                seStr = "";
+            if (!dropZeroWeights)  ||  (scalar_weight(dev) > 0.0)
+                data = round(only(get_data_values(dev)); digits = 2);
+                model = round(only(get_model_values(dev)); digits = 2);
+                stdError = get_std_errors(dev);
+                if !isnothing(stdError)
+                    stdError = round(stdError, digits = 2);
+                    seStr = " ($stdError)";
+                else
+                    seStr = "";
+                end
+                _, sDevStr = scalar_dev(dev);
+                row = [string(long_description(dev))  "$(data)$(seStr)"  string(model)  sDevStr];
+                tbM = vcat(tbM, row);
             end
-            _, sDevStr = scalar_dev(dev);
-            row = [string(long_description(dev))  "$(data)$(seStr)"  string(model)  sDevStr];
-            tbM = vcat(tbM, row);
         end
     end
     return tbM, headerV

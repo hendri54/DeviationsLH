@@ -10,7 +10,9 @@ function deviation_test(d)
 
         sDev, devStr = scalar_dev(d);
         @test isa(sDev, Float64);
-        @test isa(devStr, AbstractString)
+        @test isa(devStr, AbstractString);
+        sWt = scalar_weight(d);
+        @test (sWt > 0)  ||  (sDev == 0.0);
         
         dStr = mdl.short_display(d);
         @test dStr[1:4] == "dev1"
@@ -55,6 +57,8 @@ function bounds_test()
             else
                 @test scalarDev > 0.0
             end
+            sWt = scalar_weight(d);
+            @test (sWt > 0)  ||  (scalarDev == 0.0);
             
             dStr = mdl.short_display(d);
             @test dStr[1:4] == "dev1"
@@ -84,7 +88,9 @@ function penalty_test()
         @test isa(scalarDev, Float64);
         @test isa(devStr, AbstractString)
         @test scalarDev > 0.0
-        
+        sWt = scalar_weight(d);
+        @test (sWt > 0)  ||  (scalarDev == 0.0);
+    
         dStr = mdl.short_display(d);
         @test dStr[1:4] == "dev1"
         println("--- Showing deviation")
@@ -116,6 +122,9 @@ function scalar_dev_test()
         @test isa(devStr, AbstractString)
         dStr = mdl.short_display(d);
         @test dStr[1:4] == "dev1"
+
+        sWt = scalar_weight(d);
+        @test (sWt > 0)  ||  (sDev == 0.0);
 
         modelV = d.dataV .+ 0.2;
         mdl.set_model_values(d, modelV);
@@ -164,6 +173,8 @@ function regression_dev_test()
     scalarDev, scalarStr = scalar_dev(d);
     @test scalarDev > 0.0
     @test isa(scalarStr, String)
+    sWt = scalar_weight(d);
+    @test (sWt > 0)  ||  (scalarDev == 0.0);
 
     mRegr = RegressionTable(nameV, dCoeffV, dSeV .+ 0.1);
     set_model_values(d, mRegr);

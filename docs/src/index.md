@@ -54,7 +54,10 @@ ChangeTable
 
 # Change Log
 
-2024-July-9 (v1.4)
+2024-July-10 (v2.5)
+- Added `scalar_weight`. Used to determine whether a deviation is used for computing overall scalar deviation.
+- `scalar_deviation_table`: added arg `dropZeroWeights`
+2024-July-9 (v2.4)
 Replaced Formatting.jl
 2024-Feb-1
 Added `is_bounds_deviation`.

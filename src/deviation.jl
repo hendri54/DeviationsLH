@@ -11,6 +11,12 @@ is_scalar_deviation(::ScalarDeviation{F1}) where F1 = true;
 is_bounds_deviation(::AbstractDeviation) = false;
 is_bounds_deviation(::BoundsDeviation) = true;
 
+"""
+Weight used to compute the scalar deviation.
+When zero, the deviation is not used in the overall deviation.
+"""
+scalar_weight(d :: AbstractDeviation) = d.scalarWt;
+
 
 """
 	$(SIGNATURES)

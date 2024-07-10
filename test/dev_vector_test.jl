@@ -110,8 +110,10 @@ function scalar_dev_table_test()
             append!(devV, d);
         end
 
-        tbM, headerV = scalar_deviation_table(devV);
-        @test size(tbM, 2) == length(headerV);
+        for dropZeroWeights in (true, false)
+            tbM, headerV = scalar_deviation_table(devV; dropZeroWeights);
+            @test size(tbM, 2) == length(headerV);
+        end
     end
 end
 
