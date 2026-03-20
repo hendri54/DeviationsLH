@@ -40,6 +40,7 @@ end
 
 Log scaling: `f(m,d) = abs(log(f0 + m)) - log(f0 + d))`.
 Assumes that model and data values are non-negative.
+Negative model values are truncated.
 Produces intuitively appealing deviations when `f0 = 0.5`.
 """
 struct ScalingLog{F1} <: AbstractScaling{F1}

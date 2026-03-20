@@ -29,7 +29,7 @@ function scalar_deviation(s :: AbstractScaling{F1},
     scalarDev = zero(F1);
     for j in eachindex(modelV)
         scalarWeight  ||  (wt = wtV[j] / totalWt);
-        scalarDev += wt * scale(s, dataV[j], modelV[j]);
+        scalarDev += wt * scale(s, modelV[j], dataV[j]);
     end
 
     @argcheck (scalarDev >= 0.0)  "Scalar dev not positive: $scalarDev";
@@ -62,10 +62,19 @@ scale(s :: ScalingRelative, m, d) = abs.((d .- m) ./ s.scale) .^ s.p;
 ## ----------  Log
 
 make_scaling_log(f0) = ScalingLog(f0);
+
+"""
+Truncate negative model values. But negative data values cause error.
+"""
 function scale(s :: ScalingLog, m, d)
-    @assert all_at_least(m, -s.f0 + 1e-8)  "Model values too low: $m";
-    @assert all_at_least(d, -s.f0 + 1e-8)  "Data values too low: $d";
-    abs.(log.(s.f0 .+ m) .- log.(s.f0 .+ d));
+    mScaled = s.f0 .+ m;
+    if !all_at_least(mScaled, 1e-8)  
+        @warn("Model values too low: $m");
+        mScaled = max.(mScaled, 1e-8);
+    end
+    dScaled = s.f0 .+ d;
+    @assert all_at_least(dScaled, 1e-8)  "Data values too low: $d";
+    abs.(log.(mScaled) .- log.(dScaled));
 end
 
 # --------------

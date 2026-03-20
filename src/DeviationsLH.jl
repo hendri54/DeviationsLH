@@ -1,7 +1,7 @@
 module DeviationsLH
 
 using ArgCheck, DocStringExtensions, Format, PrettyTables
-using CommonLH, EconometricsLH, ModelObjectsLH
+using CommonLH, EconometricsLH
 
 # Types
 export AbstractDeviation, ScalarDeviation, Deviation, RegressionDeviation, BoundsDeviation, PenaltyDeviation;
