@@ -138,7 +138,8 @@ Used during calibration.
 If `scalar_dev(dev) < minDev` then the deviation is not shown.
 """
 function show_deviations(io :: IO,  d :: DevVector; 
-        sorted :: Bool = false, minDev = -1.0)
+        sorted :: Bool = false, minDev = -1.0,
+        nameLength = 25, lineWidth = 100)
     if length(d) < 1
         println(io, "No deviations");
     else
@@ -152,8 +153,8 @@ function show_deviations(io :: IO,  d :: DevVector;
         if sorted
             lineV = sort(lineV);
         end
-        stringWidth = min(20, maximum(length.(lineV)));
-        show_string_vector(lineV, 80; io, stringWidth);
+        stringWidth = min(nameLength, maximum(length.(lineV)));
+        show_string_vector(lineV, lineWidth; io, stringWidth);
     end
 end
 
